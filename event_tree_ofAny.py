@@ -8,8 +8,7 @@ class Node:
         self.value = value
         self.children = []
         self.children_value = []
-        self.narration = []
-
+        self.narration = ""
 
 class Tree:
     def __init__(self):
@@ -63,24 +62,10 @@ class Tree:
                 self.rec_get_all_children(current_node.children[current_node.children_value.index(i)], parent_value)
 
 
-def create_narration(input, file_name):
-    path = Path(f'/Users/camdenawright/PycharmProjects/Final Project/{file_name}')
-
-    # This is using the robotic voice
-    if not path.is_file():
-        sound = gtts.gTTS(input, lang="en")
-        sound.save(file_name)
-        print("Created a new file")
-
-    playsound.playsound(file_name)
-
 
 disease = Tree()
 
-disease.add_child("Create Character", None)
+root = disease.add_child("Create Character", None)
 
 disease.add_child("Go to your families hut to fetch the money", "Create Character")
 disease.add_child("Ask your older brother to fetch the money in the hut", "Create Character")
-
-disease.print_tree()
-

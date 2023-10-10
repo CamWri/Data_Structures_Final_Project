@@ -49,20 +49,29 @@ def intro():
     #if some other family member goes, you see the gaurd spazzing, and phoming from the mouth, continue on
 
     pass
+def create_narration(input, file_name, node):
+        path = Path(f'{file_name}')
 
+        # This is using the robotic voice
+        if not path.is_file():
+            sound = gtts.gTTS(input, lang="en")
+            sound.save(file_name)
+            print("Created a new file")
+
+        playsound.playsound(file_name)
 
 def main():
 
     create_narration("With good in life, there also comes the evil."
-            "So, even in the most prosperous of times, evil still exists. Sometimes it is just harder to see."
-            "Evil lingers, grows, and evolves during prosperity, eventually overtaking the good."
-            "Today is one of those times with a curse spreading all across the lands,  corrupting life itself."
-            "The once living things are accursed with rage, anger, and vengeance with no mental power or free will."
-            "Some say its an act of a higher deity, others say its from the mountains."
-            "Some even say it was created by the living, but no one knows for sure."
-            "Depending on your actions, you can be the savior of the lands, or lead the curse for domination."
-            "So, with the fate of the lands in your hands, who will you be?",
-                     "intro")
+        "So, even in the most prosperous of times, evil still exists. Sometimes it is just harder to see."
+        "Evil lingers, grows, and evolves during prosperity, eventually overtaking the good."
+        "Today is one of those times with a curse spreading all across the lands,  corrupting life itself."
+        "The once living things are accursed with rage, anger, and vengeance with no mental power or free will."
+        "Some say its an act of a higher deity, others say its from the mountains."
+        "Some even say it was created by the living, but no one knows for sure."
+        "Depending on your actions, you can be the savior of the lands, or lead the curse for domination."
+        "So, with the fate of the lands in your hands, who will you be?",
+            "intro", None)
 
 
     players_character = create_char()
