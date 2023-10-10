@@ -1,9 +1,9 @@
 """
--Change the whole thing to be more dnd like with creating a party and facing enemies, finding enemies, purchasing stuff
     -1st Step
         -Establish the introduction a little bit better
-        -Create companions
         -Use an AI voice generator to create a mp file to then read it as dialog or narrator
+        -Expand the tree
+        -Integrate the character creation and tree
 
 
     -2nd Step

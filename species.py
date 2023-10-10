@@ -58,8 +58,43 @@ class character():
         list.append(self.athleticism)
         return list
 
-    def establish_dialouge_options(self):
-        pass
+def create_char():
+    player_character_name = input("Enter your character name: ").rstrip().capitalize()
+    player_char = character(player_character_name, 0, 0, 0, 0, 0, 0, 0)
+    character_attributes(player_char)
+    print('\n\n\n')
+    player_char.species_sheet(player_char, player_character_name)
+    print('\n')
+    return player_char
 
+def attribute(species, attriubte, number, points_left):
+    print(f'Attribute {number} out of 7:\t', end="")
+    species.attriubte = species.establish_attributes(attriubte)
+    points_left = points_left - species.attriubte
+    print(f'\t\tPoints Remaining:{points_left}\n', end="")
 
+    return species.attriubte, points_left
 
+def character_attributes(player_species):
+    print(
+        "\nYou will have a total of 40 points over 7 categories going from 1 - 10. For any of these, press '0' for information on this attribute.")
+    print(
+        "Your attributes are Athleticism, Intelligence, Communication, Resilience, Population, Health and Reputation")
+
+    attributes_total = True
+
+    while attributes_total:
+        points_left = 40
+        player_species.athleticism, points_left = attribute(player_species, "athleticism", 1, points_left)
+        player_species.intelligence, points_left = attribute(player_species, "intelligence", 2, points_left)
+        player_species.communication, points_left = attribute(player_species, "communication", 3, points_left)
+        player_species.resilience, points_left = attribute(player_species, "resilience", 4, points_left)
+        player_species.population, points_left = attribute(player_species, "population", 5, points_left)
+        player_species.health, points_left = attribute(player_species, "health", 6, points_left)
+        player_species.reputation, points_left = attribute(player_species, "reputation", 7, points_left)
+
+        if points_left == 0:
+            break
+        else:
+            print(
+                "\nPlease enter the attribute values that have a sum of 40 going from 1 - 10 where 0 is for information on the attribute")
