@@ -1,5 +1,9 @@
 from colorama import *
 
+import inventory
+from inventory import *
+
+
 attribute_explanation = {
     "strength": "Strength accounts for how strong your character is. The more you put into strength, the better your physical qualities and attributes are.",
     "intelligence": "Intelligence accounts for how clever your character is. The more you put into intelligence, the more knowledge you have, and the better ability to use logic and reasoning.",
@@ -13,15 +17,17 @@ attribute_explanation = {
 
 
 class character():
-    def __init__(self, name, strength, intelligence, resilience, agility, health, wisdom, charisma):
+    def __init__(self, name, list, inventory):
         self.name = name
-        self.strength = strength
-        self.intelligence = intelligence
-        self.resilience = resilience
-        self.agility = agility
-        self.health = health
-        self.wisdom = wisdom
-        self.charisma = charisma
+        self.strength = list[0]
+        self.intelligence = list[1]
+        self.resilience = list[2]
+        self.agility = list[3]
+        self.health = list[4]
+        self.wisdom = list[5]
+        self.charisma = list[6]
+        self.inventory = inventory
+
 
     def species_sheet(self, character, char_name):
         print(f'Character Name: {char_name}')
@@ -32,6 +38,10 @@ class character():
         print(f'Health: {character.health}')
         print(f'Wisdom: {character.wisdom}')
         print(f'Charisma: {character.charisma}')
+        print(f'Inventory:')
+        for i in character.inventory.iteams:
+            print(f'{i}', end = " ")
+        print(f'Gold: {character.inventory.gold}')
 
     def get_attributes_asList(self):
         list = []

@@ -9,20 +9,20 @@ class Node:
         self.value = value
         self.children = []
         self.children_value = []
-        self.action = None
         self.audio_file = ""
         self.audio_file_text = ""
+        self.enemies = []
 
     def add_child(self, node):
         self.children.append(node)
         self.children_value.append(node.value)
         return node
 
-    def establish_action(self, action):
-        self.action = action
-
     def establish_audio_file(self, file_name):
         self.audio_file = file_name
+
+    def establish_enemies(self):
+        pass
 
 
 class Tree:
@@ -85,21 +85,13 @@ node_you_2_1_1.establish_audio_file("")
 node_you_2_1_1.audio_file_text = "You follow his orders. You run inisde and grab the money as quickly as possible to get the gaurds to leave even quicker. As you grab the money, you hear a loud screech of sheer fear."
 you_2_1_1 = intro_1_1_1.add_child(node_you_2_1_1)
 
-node_fam_2_1_2 = Node("You tell your little brother to the house to pick up the money")
-node_fam_2_1_2.audio_file_text = "As older siblings should, you tell your younger brother to do you what you were assigned to do. He hesitantly obligies and leaves to grab the money. As your brother leaves, you see one of the gaurds faint. Your parents and the other guards checks on him."
-fam_2_1_2 = intro_1_1_1.add_child(node_fam_2_1_2)
-
-node_wisdom_check_2_1_3 = Node("Roll a wisdom check to analyze the guards demeanour")
+node_wisdom_check_2_1_3 = Node("Examine the silent guards demeanour")
+node_wisdom_check_2_1_3.audio_file_text = "As you are about to leave, you see the guard have a slight wince of pain, twitching eyes, and sweating. You ask the gaurd if he is okay. No response. You look at the other gaurd that has started looking at paperwork. As you look back at the ill strucken gaurd, you see his soulless and bloodshot eyes. You see the guard, no, this lifeless creature, reach for the other gaurd, pumblening him to death. Everyone looks in horror, as your father demands everyone to go inside as he stands there holding his ground and drawing a blade."
 wisdom_check_2_1_3 = intro_1_1_1.add_child(node_wisdom_check_2_1_3)
 
-node_grab_run_weapon_3_1_1 = Node("You grab your sword and revolver and then run outside")
+
+node_grab_run_weapon_3_1_1 = Node("You grab your sword and then run outside")
 grab_run_weapon_3_1_1 = you_2_1_1.add_child(node_grab_run_weapon_3_1_1)
 
-node_run_3_1_2 = Node("You run outside with the extra coins to ensure your family's safety by paying extra")
+node_run_3_1_2 = Node("You run outside with the extra money to pay off the guards so they do no harm.")
 run_3_1_2 = you_2_1_1.add_child(node_run_3_1_2)
-
-node_check_guard_3_2_1 = Node("Tell your parents to stay back")
-check_guard_3_2_1 = node_fam_2_1_2.add_child(node_check_guard_3_2_1)
-
-node_let_adults_3_2_2 = Node("Let the other guards and parents deal with it")
-let_adults_3_2_2 = node_fam_2_1_2.add_child(node_let_adults_3_2_2)

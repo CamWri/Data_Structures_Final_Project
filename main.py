@@ -4,25 +4,18 @@ import assemblyai as aai
 
 aai.settings.api_key = f"303f86dbeeec4bb9a444259da3a61a0d"
 
-
-#Introduction of how the governence guards shows up to take money for the protection of your townhome. You and your family are outside farming.
-#The collectors talk about a rumor of unkown disease that has been speading to the main city with no ideas of how it spreads.
-#(There can be an action here where you get the money or someother person gets the money), this is where the tree starts
-#If you go, you grab the money then you hear a noise, and it is one of the gaurds spazzing out, continue on
-#if some other family member goes, you see the gaurd spazzing, and phoming from the mouth, continue on
-
 def create_playable_char():
     player_character_name = input(Fore.RED + Style.BRIGHT + "Enter your character name: " + Style.RESET_ALL).rstrip().capitalize()
-    #player_char = character(player_character_name, 0, 0, 0, 0, 0, 0, 0)
-    #player_char.character_attributes(player_char)
-    #print('\n\n\n')
-    #player_char.species_sheet(player_char, player_character_name)
-    #print('\n')
-    #return player_char
-    return player_character_name
+    player_char = character(player_character_name, [0, 0, 0, 0, 0, 0, 0], Inventory())
+    player_char.character_attributes(player_char)
+    player_char.inventory.add_iteam("Light_Sword")
+    print('\n\n\n')
+    player_char.species_sheet(player_char, player_character_name)
+    print('\n')
+    return player_char
 
 def create_non_playable_char(name, list):
-    player_char = character(name, list[0], list[1], list[2], list[3], list[4], list[5], list[6])
+    player_char = character(name, list, Inventory())
     return player_char
 
 
