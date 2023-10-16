@@ -1,6 +1,3 @@
-from colorama import *
-
-import inventory
 from inventory import *
 
 
@@ -17,85 +14,36 @@ attribute_explanation = {
 
 
 class character():
-    def __init__(self, name, list, inventory):
+    def __init__(self, name, inventory, distance = 0, weakness = None):
         self.name = name
-        self.strength = list[0]
-        self.intelligence = list[1]
-        self.resilience = list[2]
-        self.agility = list[3]
-        self.health = list[4]
-        self.wisdom = list[5]
-        self.charisma = list[6]
         self.inventory = inventory
+        self.melee_weapon = None
+        self.spell_weapon = None
+        self.distance_from_player = distance
+        self.weakness = weakness
+        #Weakness is a list of all weaknesses
 
-
-    def species_sheet(self, character, char_name):
+    def char_sheet(self, character, char_name):
         print(f'Character Name: {char_name}')
-        print(f'Strength: {character.strength}')
-        print(f'Intelligence: {character.intelligence}')
-        print(f'Resilience: {character.resilience}')
-        print(f'Agility: {character.agility}')
-        print(f'Health: {character.health}')
-        print(f'Wisdom: {character.wisdom}')
-        print(f'Charisma: {character.charisma}')
-        print(f'Inventory:')
+        print(f'\tInventory:', end = " ")
         for i in character.inventory.iteams:
-            print(f'{i}', end = " ")
-        print(f'Gold: {character.inventory.gold}')
-
-    def get_attributes_asList(self):
-        list = []
-        list.append(self.strength)
-        list.append(self.intelligence)
-        list.append(self.resilience)
-        list.append(self.agility)
-        list.append(self.health)
-        list.append(self.wisdom)
-        list.append(self.charisma)
-        return list
-
-    def attribute(self, species, attriubte, number, points_left):
-        print(f'Attribute {number} out of 7:\t', end="")
-        species.attriubte = species.establish_attributes(attriubte)
-        points_left = points_left - species.attriubte
-        print(f'\t\tPoints Remaining:{points_left}\n', end="")
-
-        return species.attriubte, points_left
-
-    def establish_attributes(self, attribute):
-
-        attribute_value = -1
-
-        while (attribute_value <= -1 or attribute_value > 10):
-            try:
-                attribute_value = int(input(f'Please input the {attribute} of your species: '))
-                if attribute_value == 0:
-                    print('\t' + attribute_explanation[attribute] + '\n')
-                    attribute_value = int(input(f'Please input the {attribute} of your species: '))
-            except ValueError:
-                print("Please input the {attribute} of your species with values from 0 to 10: \n")
-                attribute_value = -1
-
-        return attribute_value
+            print(f'{i.name}', end = " ")
+        print(f'\n\tGold: {character.inventory.gold}')
+        print()
 
 
-    def character_attributes(self, player_species):
-        print("\nYou will have a total of 40 points over 7 categories going from 1 - 10. For any of these, press '0' for information on this attribute.")
-        print("Your attributes are strength, Intelligence, resilience, agility, health, wisdom and charisma")
+    def attack(self, target):
+        pass
 
-        attributes_total = True
+    def examine(self):
+        #This lets you examine any enemey in a fight
+        pass
 
-        while attributes_total:
-            points_left = 40
-            player_species.strength, points_left = self.attribute(player_species, "strength", 1, points_left)
-            player_species.intelligence, points_left = self.attribute(player_species, "intelligence", 2, points_left)
-            player_species.resilience, points_left = self.attribute(player_species, "resilience", 3, points_left)
-            player_species.agility, points_left = self.attribute(player_species, "agility", 4, points_left)
-            player_species.health, points_left = self.attribute(player_species, "health", 5, points_left)
-            player_species.wisdom, points_left = self.attribute(player_species, "wisdom", 6, points_left)
-            player_species.charisma, points_left = self.attribute(player_species, "charisma", 7, points_left)
+    def change_melee_weapon(self, new_weapon):
+        pass
 
-            if points_left == 0:
-                break
-            else:
-                print("\nPlease enter the attribute values that have a sum of 40 going from 1 - 10 where 0 is for information on the attribute")
+    def change_spell_weapon(self, new_weapon):
+        pass
+
+    def loot(self, target):
+        pass
