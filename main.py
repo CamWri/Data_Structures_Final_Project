@@ -2,11 +2,6 @@ from event_tree_ofAny import *
 from species import *
 
 
-def create_non_playable_char(name, list):
-    player_char = character(name, list, Inventory())
-    return player_char
-
-
 def play_intro():
     print(Fore.BLUE + "There has and will always be good and evil. During prosperity, evil lingers in the shadows of the good. Over time though, this evil unleashes on the world. Today is one of those times with a curse spreading all across the lands corrupting the soul itself. Depending on your actions, you can be the savior of the lands or lead the curse for domination. So with the fate of the lands in your hands, who will you be?" + Fore.RESET)
     #playsound.playsound(root.audio_file)

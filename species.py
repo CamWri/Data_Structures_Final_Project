@@ -17,8 +17,9 @@ class character():
     def __init__(self, name, inventory, distance = 0, weakness = None):
         self.name = name
         self.inventory = inventory
-        self.melee_weapon = None
-        self.spell_weapon = None
+        self.weapon1 = None
+        self.weapon2 = None
+        self.armor = None
         self.distance_from_player = distance
         self.weakness = weakness
         #Weakness is a list of all weaknesses
@@ -39,11 +40,10 @@ class character():
         #This lets you examine any enemey in a fight
         pass
 
-    def change_melee_weapon(self, new_weapon):
+    def change_melee_weapon(self, weapon, new_weapon):
         pass
 
-    def change_spell_weapon(self, new_weapon):
+    def change_armor(self, new_armor):
         pass
-
     def loot(self, target):
         pass
