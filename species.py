@@ -14,7 +14,7 @@ attribute_explanation = {
 
 
 class character():
-    def __init__(self, name, inventory, distance = 0, weakness = None):
+    def __init__(self, name, inventory, distance = 0, weakness = None, health = 0):
         self.name = name
         self.inventory = inventory
         self.weapon1 = None
@@ -22,6 +22,7 @@ class character():
         self.armor = None
         self.distance_from_player = distance
         self.weakness = weakness
+        self.health = health
         #Weakness is a list of all weaknesses
 
     def char_sheet(self, character, char_name):
@@ -36,14 +37,5 @@ class character():
     def attack(self, target):
         pass
 
-    def examine(self):
-        #This lets you examine any enemey in a fight
-        pass
-
-    def change_melee_weapon(self, weapon, new_weapon):
-        pass
-
-    def change_armor(self, new_armor):
-        pass
     def loot(self, target):
         pass

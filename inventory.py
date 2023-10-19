@@ -4,9 +4,6 @@ class Inventory:
         self.gold = gold
         self.iteams = []
 
-    def add_iteam(self, iteam):
-        self.iteams.append(iteam)
-
     def sell_iteam(self, iteam, character, vendor):
         pass
         #Remove the iteam from the list

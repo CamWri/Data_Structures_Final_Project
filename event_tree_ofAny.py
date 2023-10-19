@@ -4,7 +4,7 @@ from inventory import *
 from armor_weapon import *
 
 class Node:
-    def __init__(self, value, iteam = None, gold = 0):
+    def __init__(self, value, iteam = None, gold = 0, increase_health = 0):
         self.value = value
         self.children = []
         self.children_value = []
@@ -12,6 +12,7 @@ class Node:
         self.enemies = []
         self.loot = iteam
         self.gold = gold
+        self.increase_health = increase_health
 
     def add_child(self, node):
         self.children.append(node)
@@ -54,8 +55,8 @@ node_wisdom_check_2_1_3.audio_file_text = "As you are about to leave, you see th
 wisdom_check_2_1_3 = intro_1_1_1.add_child(node_wisdom_check_2_1_3)
 
 
-node_grab_run_weapon_3_1_1 = Node("You grab your sword, wand, and armour and then run outside", iteam = [Wood_Sword], gold= 10)
+node_grab_run_weapon_3_1_1 = Node("You grab your sword, wand, and armour and then run outside", iteam = [Wood_Sword, Beginners_Wand], gold= 10, increase_health=5)
 grab_run_weapon_3_1_1 = you_2_1_1.add_child(node_grab_run_weapon_3_1_1)
 
-node_run_3_1_2 = Node("You run outside with the extra money to pay off the guards so they do no harm you or your family.", gold = 200)
+node_run_3_1_2 = Node("You run outside with the extra money to pay off the guards so they do no harm you or your family.", gold = 200, increase_health=10)
 run_3_1_2 = you_2_1_1.add_child(node_run_3_1_2)
