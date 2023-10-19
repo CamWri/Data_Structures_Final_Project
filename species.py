@@ -1,5 +1,5 @@
 from inventory import *
-
+from armor_weapon import *
 
 attribute_explanation = {
     "strength": "Strength accounts for how strong your character is. The more you put into strength, the better your physical qualities and attributes are.",
@@ -17,9 +17,9 @@ class character():
     def __init__(self, name, inventory, distance = 0, weakness = None, health = 0):
         self.name = name
         self.inventory = inventory
-        self.weapon1 = None
-        self.weapon2 = None
-        self.armor = None
+        self.weapon1 = fist
+        self.weapon2 = fist
+        self.armor = clothes
         self.distance_from_player = distance
         self.weakness = weakness
         self.health = health

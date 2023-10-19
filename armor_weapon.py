@@ -134,25 +134,25 @@ class Spell:
 
     def examine(self):
         print(f"\t\tName of Spell: {self.name}")
-        print(f'\t\t\t{self.name} Damage: {self.damage}')
+        print(f'\t\t\t{self.name}Damage: {self.damage}')
         if self.elemental_damage != 0:
-            print(f"\t\t\t{self.name} Element: {self.elemental}")
-            print(f"\t\t\t{self.name} Elemental Damage: {self.elemental_damage}")
+            print(f"\t\t\tElement: {self.elemental}")
+            print(f"\t\t\tElemental Damage: {self.elemental_damage}")
         if self.range == 0:
             print(f"\t\t\tThe Main Target is you or has no target")
         else:
-            print(f"\t\t\t{self.name} Range: {self.range}")#have it to where if it is = 0, then it states only affects you/cast is from where you are
+            print(f"\t\t\tRange: {self.range}")#have it to where if it is = 0, then it states only affects you/cast is from where you are
         if self.heal != 0:
-            print(f"\t\t\t{self.name} Healing: {self.heal}")
+            print(f"\t\t\tHealing: {self.heal}")
         if self.armor !=0:
-            print(f"\t\t\t{self.name} Armor Increase: {self.armor}")
+            print(f"\t\t\tArmor Increase: {self.armor}")
         if self.num_targets != 1:
-            print(f"\t\t\t{self.name} Number of Targers: {self.num_targets}")
+            print(f"\t\t\tNumber of Targers: {self.num_targets}")
         if self.radius != 0:
-            print(f"\t\t\t{self.name} Damage Radius: {self.radius}")
+            print(f"\t\t\tDamage Radius: {self.radius}")
         if self.damage_increase != 0:
-            print(f"\t\t\t{self.name} Damage Increase: {self.damage_increase}")
-        sleep(1)
+            print(f"\t\t\tDamage Increase: {self.damage_increase}")
+        sleep(1.5)
 
 
 #Fire Spells
@@ -202,15 +202,21 @@ Astral_Healing = Spell("Astral Healing")
 Beginners_Wand = Wand("Beginners Wand", 10, [Flame_Orb, Vine_Grip, Heal])
 
 class Armor:
-    def __init__(self, name, armor_value = 0, value = 0, super_effective = None, not_very_effective = None):
+    def __init__(self, name, armor_value = 0, value = 0, super_resistant = None, not_very_resistant = None):
         self.armor_value = armor_value
         self.value = value
         self.name = name
-        self.super_effective = super_effective
-        self.not_very_effective = not_very_effective
+        self.super_resistant = super_resistant
+        self.not_very_resistant = not_very_resistant
         self.type = "armor"
 
+clothes = Armor("Clothes", armor_value=1, value = 1, not_very_resistant= "fire")
 
 
+class Fist:
+    def __init__(self):
+        self.name = "Fists"
+        self.damage = 1
+        self.range = 1
 
-
+fist = Fist()

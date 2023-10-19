@@ -16,58 +16,67 @@ def play_intro():
 def inventory_check(character, node, inventory_node):
     print(Fore.YELLOW + "Inventory:")
     print(f"\tGold: {character.inventory.gold}")
-    print(f"\tWeapon 1: {character.weapon1}")
-    print(f"\tWeapon 2: {character.weapon2}")
-    print(f"\tArmor: {character.armor}")
+    print(f"\tWeapon 1: {character.weapon1.name}")
+    print(f"\tWeapon 2: {character.weapon2.name}")
+    print(f"\tArmor: {character.armor.name}")
     for i in character.inventory.iteams:
         print(f'{i.names}')
     else:
         print("\tYou have no items in your inventory" + Fore.RESET)
         print()
-    node.children_value.remove("Inventory")
+    #node.children_value.remove("Inventory")
     node.children.remove(inventory_node)
 
 def add_iteam(character, node):
     for i in node.loot:
         character.inventory.iteams.append(i)
         print(Fore.CYAN + f'You grabbed and added to your inventory a {i.name}' + Fore.GREEN)
-        inspect = input(f"Would you like to inspect {i.name}(Y/N):").lower().rstrip()
+        inspect = input(f"Would you like to inspect {i.name}(Enter Y or N):").lower().rstrip()
         if inspect == "y" or inspect == "yes":
             print(Fore.YELLOW)
             i.examine()
             print(Fore.GREEN)
         if i.type == "weapon1" or i.type == "weapon2" or i.type == "armor":
-            equip = input(f"Would you like to equip {i.name}(Y/N):").lower().rstrip()
+            if i.type == "weapon1":
+                print(f'Current Weapon is {character.weapon1.name}')
+            elif i.type == "weapon2":
+                print(f'Current Weapon is {character.weapon2.name}')
+            elif i.type == "armor":
+                print(f'Current Armor is {character.armor.name}')
+            equip = input(f"Would you like to equip {i.name}(Enter Y or N):").lower().rstrip()
             if equip == "y" or equip =="yes":
                 if i.type == "weapon1":
                     character.weapon1 = i
+                    print(f"You are now using {character.weapon1.name}")
                 elif i.type == "weapon2":
                     character.weapon2 = i
+                    print(f"You are now using {character.weapon2.name}")
                 elif i.type == "armor":
                     character.armor = i
+                    print(f"You are now using {character.armor.name}")
             print(Fore.RESET)
 
 def next_node(node, character):
-    if len(node.children_value) > 0:
+    if len(node.children) > 0:
         inventory_node = Node("Inventory")
         node.add_child(inventory_node)
         while True:
             print(Fore.BLUE + node.audio_file_text + Fore.RESET)
-            for i in range(len(node.children_value)):
+            for i in range(len(node.children)):
                 #sleep(1)
-                print(f'Action {i}: {node.children_value[i]}', end = "\n")
+                print(f'Action {i}: {node.children[i].value}', end = "\n")
 
 
             next_action_index = int(input(Fore.RED + Style.BRIGHT + "Enter the corresponding number for which one will you do: " + Fore.RESET))
-            if node.children_value[next_action_index] == "Inventory":
+            if node.children[next_action_index].value == "Inventory":
                 inventory_check(character, node, inventory_node)
             else:
                 break
         return node.children[next_action_index]
     elif node.gold > 0:
-        print(Fore.CYAN + f"\tYou grabbed and add to your inventory {node.gold} pieces of gold")
+        print(Fore.CYAN + f"You grabbed and add to your inventory {node.gold} pieces of gold")
         character.inventory.gold += node.gold
-        print(Fore.YELLOW + f"\tNow you have {character.inventory.gold}" + Fore.RESET)
+        print(Fore.YELLOW + f"Now you have {character.inventory.gold} pieces of gold" + Fore.RESET)
     else:
         print("Done")
         return None
@@ -80,10 +89,7 @@ def main():
         node = next_node(node, character)
         if node is None:
             break
-        if node.loot is not None or node.gold > 0:
+        if node.loot is not None:
             add_iteam(character, node)
-
-            #Go through each iteam recieved from the enviorment and compare it with existing iteam, ask if you want to equip it
-
 if __name__ == "__main__":
     main()

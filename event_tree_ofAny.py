@@ -7,7 +7,7 @@ class Node:
     def __init__(self, value, iteam = None, gold = 0, increase_health = 0):
         self.value = value
         self.children = []
-        self.children_value = []
+        #self.children_value = []
         self.audio_file_text = ""
         self.enemies = []
         self.loot = iteam
@@ -16,7 +16,7 @@ class Node:
 
     def add_child(self, node):
         self.children.append(node)
-        self.children_value.append(node.value)
+        #self.children_value.append(node.value)
         return node
 
     def establish_audio_file(self, file_name):
