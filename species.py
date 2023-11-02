@@ -12,26 +12,34 @@ attribute_explanation = {
     }
 
 
-
 class character():
-    def __init__(self, name, inventory, distance = 0, weakness = None, health = 0):
+    def __init__(self, name, inventory, distance = 0, weakness = None, health = 0, weapon1 = fist, weapon2 = fist, turned = False):
         self.name = name
         self.inventory = inventory
-        self.weapon1 = fist
-        self.weapon2 = fist
-        self.armor = clothes
+        self.weapon1 = weapon1
+        self.weapon2 = weapon2
+        self.armor = Clothes
         self.distance_from_player = distance
         self.weakness = weakness
         self.health = health
-        #Weakness is a list of all weaknesses
+        self.turned = turned
+        self.dead = False
 
-    def char_sheet(self, character, char_name):
-        print(f'Character Name: {char_name}')
-        print(f'\tInventory:', end = " ")
-        for i in character.inventory.iteams:
-            print(f'{i.name}', end = " ")
-        print(f'\n\tGold: {character.inventory.gold}')
-        print()
+    def char_sheet(self):
+        print(f'Enemy: {self.name}')
+        print(f'Distance from you: {self.distance_from_player}')
+        print(f"Health: {self.health}")
+        print(f"Weakness: {', '.join(map(str.strip, self.weakness))}")
+        if self.weapon1 == self.weapon2:
+            print(f"Weapons: {self.weapon1.name}")
+        else:
+            if self.weapon1 is None:
+                print(f"Weapon: {self.weapon2.name}")
+            elif self.weapon2 is None:
+                print(f"Weapon: {self.weapon1.name}")
+            else:
+                print(f"Weapons: {self.weapon1.name} and {self.weapon2.name}")
+        print(f"Armor: {self.armor.name}")
 
 
     def attack(self, target):
@@ -39,3 +47,13 @@ class character():
 
     def loot(self, target):
         pass
+
+    def sell_iteam(self, iteam, vendor):
+        pass
+        #Remove the iteam from the list
+        #add the value of gold to the player
+
+    def buy_iteam(self, iteam, vendor):
+        pass
+Corrupt_Guard_Inventory = Inventory(100, [Iron_Sword, Wood_Shield])
+Corrupt_Guard = character(name = "Corrupt Guard", inventory = Corrupt_Guard_Inventory, weakness = ["electric", "ice"], health = 10, weapon1 = claws, weapon2 = claws, turned= True, distance=5)
