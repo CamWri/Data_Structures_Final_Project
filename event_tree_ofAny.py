@@ -125,4 +125,3 @@ tree_5_3_5 = tree_4_2_3.add_child(node_5_3_5)
 
 node_5_3_6 = Node("You loose to the guard")
 tree_5_3_6 =  tree_4_2_3.add_child(node_5_3_6)
-

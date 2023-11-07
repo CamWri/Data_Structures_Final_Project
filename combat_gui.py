@@ -1,4 +1,5 @@
-from hover_text import *
+from loot_gui import *
+
 class Combat_GUI:
     def __init__(self, combat_interface, character, enemy_list):
         self.combat_interface = combat_interface
@@ -13,8 +14,15 @@ class Combat_GUI:
 
         self.frame_characters.pack(side=TOP)
 
-        self.attack_commit_button = Button(combat_interface, text="Attack", command=lambda: self.attack(character, enemy_list))
-        self.attack_commit_button.pack(side=BOTTOM, pady=5)
+        self.frame_button = Frame(self.combat_interface)
+
+        self.attack_commit_button = Button(self.frame_button, text="Attack", command=lambda: self.attack(character, enemy_list))
+        self.attack_commit_button.pack(side=LEFT, anchor="e", padx = 10)
+
+        self.exit_commit_button = Button(self.frame_button, text="Exit", command=lambda: self.combat_interface.destroy())
+        self.exit_commit_button.pack(side=RIGHT, anchor="w", padx = 10)
+
+        self.frame_button.pack(side=BOTTOM, pady=5)
 
         self.frame_users_choice = Frame(combat_interface)
 
@@ -44,7 +52,7 @@ class Combat_GUI:
             self.enemy_label_list.append(self.enemy_label)
             self.frame_single_enemy.pack(side=TOP)
 
-            self.enemy_radio_button = Radiobutton(self.frame_target_enemy, text=f"{enemy.name}", variable=self.radio_enemy_set, value=self.enemy_total, width=20)
+            self.enemy_radio_button = Radiobutton(self.frame_target_enemy, text=f"{enemy.name}", variable=self.radio_enemy_set, value=self.enemy_total, width=len(enemy.name))
             self.enemy_radio_button.pack(side=TOP)
             CreateToolTip(self.enemy_radio_button, text=f"Health: {enemy.health}\nDistance: {enemy.distance_from_player}\nWeakness: {weakness}")
             self.radio_enemy_label_list.append(self.enemy_radio_button)
@@ -57,7 +65,7 @@ class Combat_GUI:
 
         self.frame_attacks = Frame(self.frame_users_choice)
 
-        self.attacks_label = Label(self.frame_attacks, width=15, text="Possible Attacks")
+        self.attacks_label = Label(self.frame_attacks, width=17, text="Possible Attacks")
         self.attacks_label.pack(side=TOP)
 
         self.radio_attack_set = IntVar()
@@ -66,20 +74,20 @@ class Combat_GUI:
         self.button_value_attack = 0
 
         self.button_value_attack += 1
-        self.weapon1_radio_button = Radiobutton(self.frame_attacks, text=f"{character.weapon1.name}", variable=self.radio_attack_set, value= 1, width=20)
+        self.weapon1_radio_button = Radiobutton(self.frame_attacks, text=f"{character.weapon1.name}", variable=self.radio_attack_set, value= 1, width=len(character.weapon1.name) + 4)
         self.weapon1_radio_button.pack(side=TOP)
         CreateToolTip(self.weapon1_radio_button,text=f"{character.weapon1.examine()}")
 
         if character.weapon2.type_of_damage == "magical":
             self.button_value_attack = 3
             for spell_index in range(len(character.weapon2.spells)):
-                self.spell_radio_button = Radiobutton(self.frame_attacks, text=f"Cast {character.weapon2.spells[spell_index].name}", variable= self.radio_attack_set, value= self.button_value_attack, width=20)
+                self.spell_radio_button = Radiobutton(self.frame_attacks, text=f"Cast {character.weapon2.spells[spell_index].name}", variable= self.radio_attack_set, value= self.button_value_attack, width=len(character.weapon2.spells[spell_index].name) + 4)
                 self.spell_radio_button.pack(side=TOP)
                 self.button_value_attack += 1
                 CreateToolTip(self.spell_radio_button, text=f"{character.weapon2.spells[spell_index].examine()}")
 
         else:
-            self.weapon2_radio_button = Radiobutton(self.frame_attacks, text=f"{character.weapon2.name}", variable= self.radio_attack_set, value= 2, width=20)
+            self.weapon2_radio_button = Radiobutton(self.frame_attacks, text=f"{character.weapon2.name}", variable= self.radio_attack_set, value= 2, width=len(character.weapon2.name) + 4)
             self.weapon2_radio_button.pack(side=TOP)
             CreateToolTip(self.weapon2_radio_button, text=f"{character.weapon2.examine()}")
 
@@ -137,7 +145,8 @@ class Combat_GUI:
                 self.combat_interface.after(3000, lambda: self.frame_users_choice.destroy())
                 self.combat_interface.after(3000, lambda: self.frame_users_choice.destroy())
                 self.combat_interface.after(3000, lambda: self.attack_commit_button.destroy())
-                self.loot(character, enemy_list)
+                self.combat_interface.after(3000, lambda: self.exit_commit_button.destroy())
+                self.combat_interface.after(3050, lambda: LOOT_GUI(self.combat_interface, character, enemy_list))
             elif character.health == 0:
                 self.label_final_text = Label(self.combat_interface, text = "You Have Lost the Fight, Exit When Ready On the Top Left")
                 self.label_final_text.pack(side=BOTTOM, pady=20)
@@ -163,9 +172,21 @@ class Combat_GUI:
         CreateToolTip(self.character_armor, text=character.armor.examine())
         return self.character_label
 
-    def loot(self, character, enemy_list):
-        pass
 
 
+def main():
+    window = Tk()
+    window.geometry("500x350")
 
+    window.overrideredirect(True)
+
+
+    exit_commit_button = Button(window, text="Exit", command=lambda: window.destroy())
+    exit_commit_button.pack(side=RIGHT, anchor="w", padx=10)
+
+    window.mainloop()
+
+
+if __name__ == "__main__":
+    main()
 

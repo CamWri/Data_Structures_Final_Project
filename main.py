@@ -153,7 +153,6 @@ def combat(character, enemy_list):
     combat_interface.overrideredirect(True)
     Combat_GUI(combat_interface, character, enemy_list)
 
-
     combat_interface.mainloop()
 
 
