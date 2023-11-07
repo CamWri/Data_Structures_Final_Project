@@ -1,8 +1,9 @@
-from tkinter.tix import Balloon
+#If multiple enemies are the same, like corrupt gaurds, number them in the name
+
 
 from species import *
-from colorama import *
 from inventory import *
+from colorama import *
 
 class Node:
     def __init__(self, value, iteam = None, gold = 0, enemies = []):
@@ -12,18 +13,10 @@ class Node:
         self.enemies = enemies
         self.loot = iteam
         self.gold = gold
-        self.bitten = False
 
     def add_child(self, node):
         self.children.append(node)
         return node
-
-    def establish_audio_file(self, file_name):
-        self.audio_file = file_name
-
-    def establish_enemies(self):
-        pass
-
 
 class Tree:
     def __init__(self):
@@ -62,8 +55,9 @@ node_3_1_2 = Node("You run outside with the extra money to bribe the guards.", g
 node_3_1_2.audio_file_text = "Your mind is racing with thoughts of what could have happened and you think a way to gaurantee you and your families saftey, a bribe. You run to your personal stash of coins on the other side of your hut and grab it all. As you are running back, you hear a blood curdaling scream of fear, that turns to pain, and fades off. You reach outside to only see an atrocity. Both guards, hunched over you entire family, souless and primitive eyes with the faintest of pupil. You see the faintest of movements of all your family membets, so you know they are alive, so you have to do something. These things that were once human see you and rush after you."
 tree_3_1_2 = tree_2_1_1.add_child(node_3_1_2)
 
-node_3_2_3 = Node("You run join the fight with your father", enemies = [Corrupt_Guard])
-node_3_2_3.audio_file_text = "You rush out into the heat of the conflict. You understand that your father shouldn't have to do it alone. Your father sees you out of the corner of your eye as he starts to engage. "
+node_3_2_3 = Node("You run to join the fight with your father")
+node_3_2_3.audio_file_text = "You rush out into the heat of the conflict. You understand that your father shouldn't have to do it alone. Your father sees you out of the corner of your eye as he starts to engage."
+node_3_2_3.enemies = [(character(name="Corrupt Guard", inventory=Inventory(100, [Iron_Sword, Wood_Shield]), weakness=["electric", "ice"], health=10, weapon1=claws, weapon2=claws, turned=True, distance=5, armor=Iron_Armor))]
 tree_3_2_3 = tree_2_1_2.add_child(node_3_2_3)
 
 node_3_2_4 = Node("You think your father has it under control and don't want to get in his way")
@@ -80,7 +74,8 @@ node_4_1_2 = Node("Run towards your father to help")
 node_4_1_2.audio_file_text = "You decide to attack the problem head on and help your father. Your mother seems alieved but worried at the same time. You tell her to hide and only come out when you hear your own or father voice. You turn and hear the everyone run inside. As you get outside, you hear the deadening silence and smell ageing blood and death in the air. You see your father and two bloodied guards. One of the guards has been bitten and clawed with blood all over his body while the other has been punched and stabbed by a sword with blood in the face and mouth. As you look back to your father you see movement from his end. You rush over and see a bite on his shoulder and claw marks all over his body and shirt. He lays there unconciously, but still breathing heavily as you approach. You reach over and help him up and try to get him inside to get some treatment for the injuries. As are walking back to your house, the other mangeld guard with scratches and bites begins to move."
 tree_4_1_2= tree_3_1_1.add_child(node_4_1_2)
 
-node_4_2_3 = Node("You engage knowing you only have your fists and gold", enemies= [Corrupt_Guard])
+node_4_2_3 = Node("You engage knowing you only have your fists and gold")
+#Add corrupt guard engagement
 node_4_2_3.audio_file_text = "Dialogue 1"
 tree_4_2_3 = tree_3_1_2.add_child(node_4_2_3)
 
@@ -89,9 +84,11 @@ node_4_2_4.audio_file_text = "Dialogue 2"
 tree_4_2_4 = tree_3_1_2.add_child(node_4_2_4)
 
 node_4_3_5 = Node("You beat the guard")
+node_4_3_5.audio_file_text = "You beat the guard"
 tree_4_3_5 = tree_3_2_3.add_child(node_4_3_5)
 
 node_4_3_6 = Node("You loose to the guard")
+node_4_3_6.audio_file_text = "You beat the guard"
 tree_4_3_6 =  tree_3_2_3.add_child(node_4_3_6)
 
 node_4_4_7 = Node("Check on your father to see how he is doing")
@@ -123,9 +120,9 @@ node_5_2_4 = Node("You set your father down and go check out the other guard")
 tree_5_2_4 = tree_4_1_2.add_child(node_5_2_4)
 #the other guard is tranfoming and wispers kill me in his final breaths
 
-
 node_5_3_5 = Node("You beat the guard")
 tree_5_3_5 = tree_4_2_3.add_child(node_5_3_5)
 
 node_5_3_6 = Node("You loose to the guard")
 tree_5_3_6 =  tree_4_2_3.add_child(node_5_3_6)
+
