@@ -35,7 +35,7 @@ root = tree.add_child("Background Story")
 root.audio_file_text = "There has and will always be good and evil. During prosperity, evil lingers in the shadows of the good. Over time though, this evil unleashes on the world. Today is one of those times with a curse spreading all across the lands corrupting the soul itself. Depending on your actions, you can be the savior of the lands or lead the curse for domination. So with the fate of the lands in your hands, who will you be?"
 
 node_1_1_1 = Node("Introduction of Soldiers")
-node_1_1_1.audio_file_text = "Your story begins on a blistering hot summer day. You and your family are farming to sustain your destitute life. Your father is respected from everyone you know due to being the unofficial leader of this poor community of farmers that span out miles due to his excess generosity and leadership through rough times. In the distance, you hear guards approaching and talking about the increasing derangement of people for no aparent reason, but no one, not even your family, seems to think something is wrong. From the looks of it, the guard ignores all the other huts except yours even though all have to pay for the monthly commission for being part of the city. Your mother pleads that this payment is not expected for two weeks and are not prepared to pay, but the gaurd ignores her, looks at your father, and said get your wife under control now or there will be consequences. Your father is angered, but can do nothing, so he tells you to go get the money."
+node_1_1_1.audio_file_text = "Your story begins on a blistering hot summer day. You and your family are farming to sustain your destitute life. Your father is respected by everyone you know due to being the unofficial leader of this poor community of farmers that span out miles due to his excess generosity and leadership through rough times. In the distance, you hear guards approaching and talking about the increasing derangement of people for no aparent reason, but no one, not even your family, seems to think something is wrong. From the looks of it, the guard ignores all the other huts except yours even though all have to pay for the monthly commission for being part of the city. Your mother pleads that this payment is not expected for two weeks and are not prepared to pay, but the gaurd ignores her, looks at your father, and said get your wife under control now or there will be consequences. Your father is angered, but can do nothing, so he tells you to go get the money."
 tree_1_1_1 = root.add_child(node_1_1_1)
 
 node_you_2_1_1 = Node("You go to the house to pick up the money", gold = 10)
@@ -47,7 +47,7 @@ node_2_1_2.audio_file_text = "As you are about to leave to get the money, you se
 tree_2_1_2 = tree_1_1_1.add_child(node_2_1_2)
 
 #Height 3
-node_3_1_1 = Node("You grab your sword, wand, and armour", iteam = [Wood_Sword, Beginners_Wand, Leather_Armor])
+node_3_1_1 = Node("You grab your sword, wand, and armour", iteam = [Wood_Sword, Starter_Wand, Leather_Armor])
 node_3_1_1.audio_file_text = "You run to the left side entrance to where you keep all of your equipment. All you are have is the clothes on your back and your fists. You grab and put into your inventory a wooden sword, a basic wand, and your leather armor. As you are putting your leather armor on, you mother bursts into the door with your siblings. You see fear, confusion, worriness in everyones eyes. She explains how one of the gaurds just started spaz, dropped to the ground, and then brutally pumbel the other guard to death. Now your father is fighting and he told us to run and hide. You can tell she is nervious for his saftey."
 tree_3_1_1 = tree_2_1_1.add_child(node_3_1_1)
 
@@ -56,7 +56,7 @@ node_3_1_2.audio_file_text = "Your mind is racing with thoughts of what could ha
 tree_3_1_2 = tree_2_1_1.add_child(node_3_1_2)
 
 node_3_2_3 = Node("You run to join the fight with your father")
-node_3_2_3.audio_file_text = "You rush out into the heat of the conflict. You understand that your father shouldn't have to do it alone. Your father sees you out of the corner of your eye as he starts to engage."
+node_3_2_3.audio_file_text = "You rush out into the heat of the conflict. You understand that your father shouldn't have to do it due to his old age. Your father sees you out of the corner of his eye and lets you take the initative."
 node_3_2_3.enemies = [(character(name="Corrupt Guard", inventory=Inventory(100, [Iron_Sword, Wood_Shield]), weakness=["electric", "ice"], health=10, weapon1=claws, weapon2=claws, turned=True, distance=5, armor=Iron_Armor))]
 tree_3_2_3 = tree_2_1_2.add_child(node_3_2_3)
 
@@ -84,12 +84,12 @@ node_4_2_4.audio_file_text = "Dialogue 2"
 tree_4_2_4 = tree_3_1_2.add_child(node_4_2_4)
 
 node_4_3_5 = Node("You beat the guard")
-node_4_3_5.audio_file_text = "You beat the guard"
+node_4_3_5.audio_file_text = "You beat the corrupted guard"
 tree_4_3_5 = tree_3_2_3.add_child(node_4_3_5)
 
 node_4_3_6 = Node("You loose to the guard")
-node_4_3_6.audio_file_text = "You beat the guard"
-tree_4_3_6 =  tree_3_2_3.add_child(node_4_3_6)
+node_4_3_6.audio_file_text = "You lost to the corrupted guard"
+tree_4_3_6 = tree_3_2_3.add_child(node_4_3_6)
 
 node_4_4_7 = Node("Check on your father to see how he is doing")
 node_4_4_7.audio_file_text = "You go run and check on your father. "

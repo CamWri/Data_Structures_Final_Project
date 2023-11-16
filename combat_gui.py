@@ -39,7 +39,9 @@ class Combat_GUI:
         self.total_health = 0
         self.enemy_label_list = []
         self.radio_enemy_label_list = []
+        self.enemy_frame = []
 
+        self.total_health = 0
 
         for enemy in enemy_list:
             self.enemy_total += 1
@@ -52,11 +54,14 @@ class Combat_GUI:
             self.enemy_label_list.append(self.enemy_label)
             self.frame_single_enemy.pack(side=TOP)
 
+            self.total_health += enemy.health
+
             self.enemy_radio_button = Radiobutton(self.frame_target_enemy, text=f"{enemy.name}", variable=self.radio_enemy_set, value=self.enemy_total, width=len(enemy.name))
             self.enemy_radio_button.pack(side=TOP)
             CreateToolTip(self.enemy_radio_button, text=f"Health: {enemy.health}\nDistance: {enemy.distance_from_player}\nWeakness: {weakness}")
             self.radio_enemy_label_list.append(self.enemy_radio_button)
-            self.total_health += enemy.health
+
+            self.enemy_frame.append(self.frame_single_enemy)
 
         self.frame_enemies.pack(side=TOP)
         self.frame_target_enemy.pack(side=RIGHT, anchor="e", padx=40)
@@ -72,7 +77,6 @@ class Combat_GUI:
         self.radio_attack_set.set(0)
 
         self.button_value_attack = 0
-
         self.button_value_attack += 1
         self.weapon1_radio_button = Radiobutton(self.frame_attacks, text=f"{character.weapon1.name}", variable=self.radio_attack_set, value= 1, width=len(character.weapon1.name) + 4)
         self.weapon1_radio_button.pack(side=TOP)
@@ -81,81 +85,71 @@ class Combat_GUI:
         if character.weapon2.type_of_damage == "magical":
             self.button_value_attack = 3
             for spell_index in range(len(character.weapon2.spells)):
-                self.spell_radio_button = Radiobutton(self.frame_attacks, text=f"Cast {character.weapon2.spells[spell_index].name}", variable= self.radio_attack_set, value= self.button_value_attack, width=len(character.weapon2.spells[spell_index].name) + 4)
+                self.spell_radio_button = Radiobutton(self.frame_attacks, text=f"{character.weapon2.spells[spell_index].name}", variable= self.radio_attack_set, value= self.button_value_attack, width=len(character.weapon2.spells[spell_index].name) + 4)
                 self.spell_radio_button.pack(side=TOP)
                 self.button_value_attack += 1
                 CreateToolTip(self.spell_radio_button, text=f"{character.weapon2.spells[spell_index].examine()}")
-
         else:
             self.weapon2_radio_button = Radiobutton(self.frame_attacks, text=f"{character.weapon2.name}", variable= self.radio_attack_set, value= 2, width=len(character.weapon2.name) + 4)
             self.weapon2_radio_button.pack(side=TOP)
             CreateToolTip(self.weapon2_radio_button, text=f"{character.weapon2.examine()}")
 
+
         self.frame_attacks.pack(side=LEFT, anchor="w", padx=40)
 
         self.frame_users_choice.pack(side=BOTTOM)
 
+        self.label_final_text = Label(self.combat_interface, text=f"")
+        self.label_final_text.pack(side=BOTTOM)
+
+
     def attack(self, character, enemy_list):
         if self.radio_attack_set.get() == 0 or self.radio_enemy_set.get() == 0:
-            self.radio_attack_set.set(1)
-            self.radio_enemy_set.set(1)
-        elif self.total_health == 0:
-            pass
+            if len(enemy_list) != 0:
+                self.radio_attack_set.set(1)
+                self.radio_enemy_set.set(1)
+                self.label_final_text.config(text = "Please click on an Attack and an Enemy")
         else:
             character_attack_index = self.radio_attack_set.get()
             enemy_attacked_index = self.radio_enemy_set.get() - 1
 
-            weakness = ", ".join(enemy_list[enemy_attacked_index].weakness)
+            self.label_final_text.config(text = "")
 
-            #rework attack for spells, swords etc in their respective classes, add healing and defensive spells
+
+            self.weakness = ", ".join(enemy_list[enemy_attacked_index].weakness)
+
             if character_attack_index == 1:
-                enemy_list[enemy_attacked_index].health = enemy_list[enemy_attacked_index].health - character.weapon1.damage
-                if enemy_list[enemy_attacked_index].health < 0:
-                    enemy_list[enemy_attacked_index].health = 0
-                CreateToolTip(self.enemy_label_list[enemy_attacked_index], text=f"Health: {enemy_list[enemy_attacked_index].health}\nDistance: {enemy_list[enemy_attacked_index].distance_from_player}\nWeakness: {weakness}")
-                CreateToolTip(self.radio_enemy_label_list[enemy_attacked_index], text=f"Health: {enemy_list[enemy_attacked_index].health}\nDistance: {enemy_list[enemy_attacked_index].distance_from_player}\nWeakness: {weakness}")
-                self.total_health -= character.weapon1.damage
-                if self.total_health < 0:
-                    self.total_health = 0
+                self.attack_enemy(enemy_attacked_index, enemy_list, character, character.weapon1)
             elif character_attack_index == 2:
-                enemy_list[enemy_attacked_index].health = enemy_list[enemy_attacked_index].health - character.weapon2.damage
-                if enemy_list[enemy_attacked_index].health < 0:
-                    enemy_list[enemy_attacked_index].health = 0
-                CreateToolTip(self.enemy_label_list[enemy_attacked_index], text=f"Health: {enemy_list[enemy_attacked_index].health}\nDistance: {enemy_list[enemy_attacked_index].distance_from_player}\nWeakness: {weakness}")
-                CreateToolTip(self.radio_enemy_label_list[enemy_attacked_index], text=f"Health: {enemy_list[enemy_attacked_index].health}\nDistance: {enemy_list[enemy_attacked_index].distance_from_player}\nWeakness: {weakness}")
-                self.total_health -= character.weapon2.damage
-                if self.total_health < 0:
-                    self.total_health = 0
+                self.attack_enemy(enemy_attacked_index, enemy_list, character, character.weapon2)
             else:
-                enemy_list[enemy_attacked_index].health = enemy_list[enemy_attacked_index].health - character.weapon2.spells[character_attack_index-3]
-                if enemy_list[enemy_attacked_index].health < 0:
-                    enemy_list[enemy_attacked_index].health = 0
-                CreateToolTip(self.enemy_label_list[enemy_attacked_index], text=f"Health: {enemy_list[enemy_attacked_index].health}\nDistance: {enemy_list[enemy_attacked_index].distance_from_player}\nWeakness: {weakness}")
-                CreateToolTip(self.radio_enemy_label_list[enemy_attacked_index], text=f"Health: {enemy_list[enemy_attacked_index].health}\nDistance: {enemy_list[enemy_attacked_index].distance_from_player}\nWeakness: {weakness}")
-                self.total_health -= character.weapon2.spells[character_attack_index-3]
-                if self.total_health < 0:
-                    self.total_health = 0
+                self.attack_enemy(enemy_attacked_index, enemy_list, character, character.weapon2.spells[character_attack_index-3])
+
+
+            if enemy_list[enemy_attacked_index].health == 0:
+                self.enemy_frame[enemy_attacked_index].destroy()
+                self.radio_enemy_label_list[enemy_attacked_index].destroy()
+                character.inventory.gold += enemy_list[enemy_attacked_index].inventory.gold
+
 
 
             if self.total_health == 0:
-                self.label_final_text = Label(self.combat_interface, text = "You Have Won the Fight")
+                self.label_final_text.config(text="You Have Won the Fight")
                 self.label_final_text.pack(side= BOTTOM, pady = 20)
                 self.combat_interface.after(3000, lambda: self.label_final_text.destroy())
                 self.combat_interface.after(3000, lambda: self.frame_allCharacters.destroy())
                 self.combat_interface.after(3000, lambda: self.frame_users_choice.destroy())
-                self.combat_interface.after(3000, lambda: self.frame_users_choice.destroy())
                 self.combat_interface.after(3000, lambda: self.attack_commit_button.destroy())
                 self.combat_interface.after(3000, lambda: self.exit_commit_button.destroy())
                 self.combat_interface.after(3050, lambda: LOOT_GUI(self.combat_interface, character, enemy_list))
-            elif character.health == 0:
-                self.label_final_text = Label(self.combat_interface, text = "You Have Lost the Fight, Exit When Ready On the Top Left")
+            elif character.health < 0:
+                self.label_final_text.config(text="You Have Lost the Fight")
                 self.label_final_text.pack(side=BOTTOM, pady=20)
                 self.combat_interface.overrideredirect(False)
-
+                self.combat_interface.after(3000, lambda: self.combat_interface.destroy())
 
             self.radio_attack_set.set(0)
             self.radio_enemy_set.set(0)
-
         # get the index of the enemy from the variable enemies, then use create tool tip
 
     def display_char(self, window, character):
@@ -172,21 +166,16 @@ class Combat_GUI:
         CreateToolTip(self.character_armor, text=character.armor.examine())
         return self.character_label
 
+    def attack_enemy(self, enemy_attacked_index, enemy_list, character, weapon):
+        damage = weapon.damage + (character.turned * 3)
 
+        enemy_list[enemy_attacked_index].health = enemy_list[enemy_attacked_index].health - damage
+        if enemy_list[enemy_attacked_index].health < 0:
+            self.total_health -= enemy_list[enemy_attacked_index].health + damage
+            enemy_list[enemy_attacked_index].health = 0
+        else:
+            self.total_health -= damage
 
-def main():
-    window = Tk()
-    window.geometry("500x350")
-
-    window.overrideredirect(True)
-
-
-    exit_commit_button = Button(window, text="Exit", command=lambda: window.destroy())
-    exit_commit_button.pack(side=RIGHT, anchor="w", padx=10)
-
-    window.mainloop()
-
-
-if __name__ == "__main__":
-    main()
+        CreateToolTip(self.enemy_label_list[enemy_attacked_index], text=f"Health: {enemy_list[enemy_attacked_index].health}\nDistance: {enemy_list[enemy_attacked_index].distance_from_player}\nWeakness: {self.weakness}")
+        CreateToolTip(self.radio_enemy_label_list[enemy_attacked_index], text=f"Health: {enemy_list[enemy_attacked_index].health}\nDistance: {enemy_list[enemy_attacked_index].distance_from_player}\nWeakness: {self.weakness}")
 

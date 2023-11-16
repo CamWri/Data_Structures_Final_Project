@@ -2,7 +2,7 @@ from inventory import *
 from armor_weapon import *
 
 class character():
-    def __init__(self, name, inventory, distance = 0, weakness = None, health = 0, weapon1 = punch, weapon2 = kick, turned = False, armor = Clothes):
+    def __init__(self, name, inventory, distance = 0, weakness = None, health = 0, weapon1 = punch, weapon2 = kick, turned = 0, armor = Clothes):
         self.name = name
         self.inventory = inventory
         self.weapon1 = weapon1
@@ -12,4 +12,3 @@ class character():
         self.weakness = weakness
         self.health = health
         self.turned = turned
-        self.dead = False

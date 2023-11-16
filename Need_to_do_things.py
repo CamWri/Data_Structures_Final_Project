@@ -1,22 +1,16 @@
 """
-    -1st Step
-        -Expand Weapons
-        -Make potions for healing
-        -If you have been bitten/turned, heal after every turn, deal extra damage with sword
-        -Expand the tree
-
-    -2nd Step(GUI Interface)
-        -Input widget where if you input the name/index of the item you want, then you equip it to the correlated place
-
-
-    -3rd Step
-        -Create enemies
-        -Create a battle system where people can attack
-            -Distance from enemies matters, resistances matter, health matters, type of attack matters
-            -If there are enemies and engage them, you will append two nodes inside the main/next node function. If you go to zero HP,  you lost and something happens, if you don't go to zero hp and the enemey does, then the stories goes in a different path
-            -If you loose a battle, you become turned
-
-    -4th Step
-        -Vendors
-
-"""
+    TO DO
+    -Update Inventory/Inspect Inventory
+        -Make inventory a radio button where if clicked and click button, equip that item
+    -Equipment
+        -Add spears, great hammer, axe, great axe
+        -Add more what spells can do like increase damage, heal, increase armor, debuffs etc.
+    -Combat
+        -Implement distance in combat
+        -Implement resistances, effectiveness's and type of attacks
+    -Story
+        -Make more enemies
+        -implement aspects that are particular to if you are turned or not, the more turned you are, the more voilent and emotionaless you become
+        -expand story and create more enemies
+        -After combat is over, there is three options, win, lose(when you become turned), retreat(which is exiting the window)
+    """
