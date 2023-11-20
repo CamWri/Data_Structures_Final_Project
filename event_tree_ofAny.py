@@ -57,7 +57,7 @@ tree_3_1_2 = tree_2_1_1.add_child(node_3_1_2)
 
 node_3_2_3 = Node("You run to join the fight with your father")
 node_3_2_3.audio_file_text = "You rush out into the heat of the conflict. You understand that your father shouldn't have to do it due to his old age. Your father sees you out of the corner of his eye and lets you take the initative."
-node_3_2_3.enemies = [(character(name="Corrupt Guard", inventory=Inventory(100, [Iron_Sword, Wood_Shield]), weakness=["electric", "ice"], health=10, weapon1=claws, weapon2=claws, turned=True, distance=5, armor=Iron_Armor))]
+node_3_2_3.enemies = [(character(name="Corrupt Guard", inventory=Inventory(100, [Iron_Sword, Wood_Shield]), weakness=["electric", "ice"], health=15, weapon1=claws, weapon2=claws, turned=True, distance=7, armor=Leather_Armor))]
 tree_3_2_3 = tree_2_1_2.add_child(node_3_2_3)
 
 node_3_2_4 = Node("You think your father has it under control and don't want to get in his way")
@@ -91,19 +91,23 @@ node_4_3_6 = Node("You loose to the guard")
 node_4_3_6.audio_file_text = "You lost to the corrupted guard"
 tree_4_3_6 = tree_3_2_3.add_child(node_4_3_6)
 
-node_4_4_7 = Node("Check on your father to see how he is doing")
-node_4_4_7.audio_file_text = "You go run and check on your father. "
-tree_4_4_7 = tree_3_2_4.add_child(node_4_4_7)
+node_4_3_7 = Node("You retreat from the fight")
+node_4_3_7.audio_file_text = "You decided to retreat from the fight"
+tree_4_3_7 = tree_3_2_3.add_child(node_4_3_7)
+
+node_4_4_8 = Node("Check on your father to see how he is doing")
+node_4_4_8.audio_file_text = "You go run and check on your father. "
+tree_4_4_8 = tree_3_2_4.add_child(node_4_4_8)
 #this can lead to the other one turning with your back behind, your father sacrifces himself to defeat the beast, you have a chance to behead your father cause he might turn
 
-node_4_4_8 = Node("Check the lifeless corpse of the diseased guard")
-node_4_4_8.audio_file_text = "Action 2 text file"
-tree_4_4_8 = tree_3_2_4.add_child(node_4_4_8)
-#As you walk over, you feel something inticing you to explore what this creature is. You see something buldging and squirming on its wrist.
-
-node_4_4_9 = Node("Check on the non-diseased guard")
+node_4_4_9 = Node("Check the lifeless corpse of the diseased guard")
 node_4_4_9.audio_file_text = "Action 2 text file"
 tree_4_4_9 = tree_3_2_4.add_child(node_4_4_9)
+#As you walk over, you feel something inticing you to explore what this creature is. You see something buldging and squirming on its wrist.
+
+node_4_4_10 = Node("Check on the non-diseased guard")
+node_4_4_10.audio_file_text = "Action 2 text file"
+tree_4_4_10 = tree_3_2_4.add_child(node_4_4_10)
 #this is where you git bitten, the sheer pain and discomfort makes you pass out. But you wake up and it seems only minutes have went by, see fathers bloodied trail, the guard that bitten you gone, and the intial infected guards corpse just laying there.See you have enhanced physical feets. Meet your father that is converted and hunting the rest of your familyy.Neither guard or father is hostile, sees you as one of them. Can fight them or accept your powers. If yight them off, save family, family sees bloodshot eyes, then you can talk to them about what happened or leave to not frighten your family. You loot the corpses and see that this was a hit from someone inside the capital. Then act 2 starts where you can find a cure, you can accept your fate as this hybrid
 
 #Height 5

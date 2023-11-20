@@ -14,17 +14,17 @@ class Inventory_GUI:
         label_gold = Label(frame_weapon, text=f'Gold: {character.inventory.gold}')
         label_gold.pack()
 
-        label_weapon1 = Label(frame_weapon, text=f"Weapon 1: {character.weapon1.name}")
-        label_weapon1.pack()
-        CreateToolTip(label_weapon1, text=f"{character.weapon1.examine()}")
+        self.label_weapon1 = Label(frame_weapon, text=f"Weapon 1: {character.weapon1.name}")
+        self.label_weapon1.pack()
+        CreateToolTip(self.label_weapon1, text=f"{character.weapon1.examine()}")
 
-        label_weapon2 = Label(frame_weapon, text=f"Weapon 2: {character.weapon2.name}")
-        label_weapon2.pack()
-        CreateToolTip(label_weapon2, text=f"{character.weapon2.examine()}")
+        self.label_weapon2 = Label(frame_weapon, text=f"Weapon 2: {character.weapon2.name}")
+        self.label_weapon2.pack()
+        CreateToolTip(self.label_weapon2, text=f"{character.weapon2.examine()}")
 
-        label_armor = Label(frame_weapon, text=f"Armor: {character.armor.name}")
-        label_armor.pack()
-        CreateToolTip(label_armor, text=f"{character.armor.examine()}")
+        self.label_armor = Label(frame_weapon, text=f"Armor: {character.armor.name}")
+        self.label_armor.pack()
+        CreateToolTip(self.label_armor, text=f"{character.armor.examine()}")
 
         frame_weapon.pack(side=LEFT, anchor="w", padx=30, pady=5)
 
@@ -40,24 +40,63 @@ class Inventory_GUI:
 
         frame_inventory = Frame(inventory_interface)
 
-
-
+        #Make a button on the bottom that when click calls equip_item function
+        change_item_button = Button(inventory_interface, text = "Equip Clicked Item", command= lambda: self.equip_item(character))
+        change_item_button.pack(side=BOTTOM, pady = 10)
 
         self.radio_item_set = IntVar()
         self.radio_item_set.set(-1)
-
-        for item_index in range(len(character.inventory.items)):
-            if item_index % 9 == 0:
-                temp_frame = Frame(frame_inventory, highlightthickness=2, highlightcolor="blue")
-            button = Radiobutton(temp_frame, text=f'{character.inventory.items[item_index].name}', width=10, command = lambda:self.equip_item(character.inventory.items[item_index]), variable= self.radio_item_set, value = item_index )
-            button.pack(padx = 5)
-            CreateToolTip(button, text=f"{character.inventory.items[item_index].examine()}")
-            if item_index % 9 == 0:
-                temp_frame.pack(side = LEFT)
-        if item_index % 9 != 0 and len(character.inventory.items) != 0:
-            temp_frame.pack(side=LEFT)
+        self.radio_button_list = []
+        if len(character.inventory.items) != 0:
+            for item_index in range(len(character.inventory.items)):
+                if item_index % 9 == 0:
+                    self.temp_frame = Frame(frame_inventory, highlightthickness=2, highlightcolor="blue")
+                radiobutton = Radiobutton(self.temp_frame, text=f'{character.inventory.items[item_index].name}', width=len(character.inventory.items[item_index].name), variable= self.radio_item_set, value = item_index)
+                radiobutton.pack(padx = 5)
+                CreateToolTip(radiobutton, text=f"{character.inventory.items[item_index].examine()}")
+                self.radio_button_list.append(radiobutton)
+                if item_index % 9 == 0:
+                    self.temp_frame.pack(side = LEFT)
+            else:
+                self.temp_frame.pack(side=LEFT)
+        else:
+            empty_inventory_label = Label(inventory_interface, text = "You have not other items in your inventory")
+            empty_inventory_label.pack(side=TOP, pady= 5)
 
         frame_inventory.pack(side = LEFT, pady= 5)
 
-    def equip_item(self, item):
-        pass
+    def equip_item(self, character):
+        item_to_equip_index = self.radio_item_set.get()
+        item = character.inventory.items[item_to_equip_index]
+
+        if item.type == "weapon2":
+            if character.weapon2.name == "Kick":
+                self.radio_button_list[item_to_equip_index].destroy()
+            else:
+                self.radio_button_list[item_to_equip_index].config(text = f"{character.weapon2.name}", width = len(character.weapon2.name))
+                CreateToolTip(self.radio_button_list[item_to_equip_index], text=f"{character.weapon2.examine()}")
+            character.inventory.items[item_to_equip_index] = character.weapon2
+            character.weapon2 = item
+            self.label_weapon2.config(text=f"Weapon 2: {item.name}")
+            CreateToolTip(self.label_weapon2, text=f"{item.examine()}")
+        elif item.type == "weapon1":
+            if character.weapon1.name == "Punch":
+                self.radio_button_list[item_to_equip_index].destroy()
+            else:
+                self.radio_button_list[item_to_equip_index].config(text=f"{character.weapon1.name}", width=len(character.weapon2.name))
+                CreateToolTip(self.radio_button_list[item_to_equip_index], text=f"{character.weapon1.examine()}")
+            character.inventory.items[item_to_equip_index] = character.weapon1
+            character.weapon1 = item
+            self.label_weapon1.config(text=f"Weapon 1: {item.name}")
+            CreateToolTip(self.label_weapon1, text=f"{item.examine()}")
+        elif item.type == "armor":
+            self.radio_button_list[item_to_equip_index].config(text=f"{character.armor.name}",width=len(character.armor.name))
+            CreateToolTip(self.radio_button_list[item_to_equip_index], text=f"{character.armor.examine()}")
+            character.inventory.items[item_to_equip_index] = character.armor
+            character.armor = item
+            self.label_armor.config(text=f"Armor: {item.name}")
+            CreateToolTip(self.label_armor, text=f"{item.examine()}")
+            character.weakness = []
+            for armor_weakness in item.weakness:
+                character.weakness.append(armor_weakness)
+

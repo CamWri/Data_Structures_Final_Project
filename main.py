@@ -2,6 +2,7 @@ from event_tree_ofAny import *
 from species import *
 from combat_gui import *
 from inventory_gui import *
+from time import *
 
 def play_intro():
     print(Fore.BLUE + "There has and will always be good and evil. During prosperity, evil lingers in the shadows of the good. Over time though, this evil unleashes on the world. Today is one of those times with a curse spreading all across the lands corrupting the soul itself. Depending on your actions, you can be the savior of the lands or lead the curse for domination. So with the fate of the lands in your hands, who will you be?" + Fore.RESET)
@@ -69,27 +70,25 @@ def next_node(node, character):
                 next_action_index = inventory_check(character, node, inventory_node)
             return node.children[next_action_index]
         else:
-            #for the next node, node.children[0] if you beat the guard, index node.children[1] if you loose to the guard
             print(Fore.BLUE + node.audio_file_text + Fore.RESET)
             temp_health = character.health
             sleep(3)
 
             combat(character, node.enemies)
+            total_enemy_health = 0
+            for enemy in node.enemies:
+                total_enemy_health += enemy.health
+
             if character.health == 0:
                 next_action_index = 1
                 character.turned += 1
                 character.health = temp_health + (5 * character.turned)
-            else:
+            elif  total_enemy_health == 0:
                 next_action_index = 0
+            else:
+                next_action_index = 2
 
-            next_node = node.children[next_action_index]
-
-            print(Fore.BLUE + next_node.audio_file_text + Fore.RESET)
-
-            for i in range(len(next_node.children)):
-                print(f'Action {i}: {next_node.children[i].value}', end="\n")
-            next_action_index = int(input(Fore.RED + Style.BRIGHT + "Enter the corresponding number for which one will you do: " + Fore.RESET))
-            return next_node.children[next_action_index]
+            return node.children[next_action_index]
     else:
         return None
 
@@ -108,7 +107,7 @@ def combat(character, enemy_list):
 
 def main():
     character = play_intro()
-    node  = node_1_1_1
+    node = node_1_1_1
 
     while True:
         node = next_node(node, character)
