@@ -34,9 +34,9 @@ class Wand:
     def examine(self):
         spell_name = []
         for i in self.spells:
-            spell_name.append((i.examine()))
-        spell = "\n\t".join(spell_name)
-        return f"Weapon 2: {self.name}\nValue: {self.value}\nSpells:\n\t{spell}"
+            spell_name.append((i.name))
+        spell = "\n   ".join(spell_name)
+        return f"Weapon 2: {self.name}\nValue: {self.value}\nSpells:\n   {spell}"
 
 
 class Spell:
@@ -107,15 +107,11 @@ class Armor:
         self.weakness = weakness
 
     def examine(self):
-        weakness_list = []
-        for i in self.weakness:
-            weakness_list.append(i)
-        weakness = ", ".join(weakness_list)
-        return f'Armor: {self.name}\nValue: {self.value}\nArmor Value: {self.armor_value}\nWeakness: {weakness}'
+        return f'Armor: {self.name}\nValue: {self.value}\nArmor Value: {self.armor_value}'
 
 
-Clothes = Armor("Clothes", armor_value=3, value = 1, weakness = ["ice"])
-Leather_Armor = Armor("Leather Armor", armor_value = 4, value = 10)
+Clothes = Armor("Clothes", armor_value=3, value = 1, weakness = ["ice", "fire"])
+Leather_Armor = Armor("Leather Armor", armor_value = 4, value = 10, weakness=["ice"])
 Iron_Armor = Armor("Iron Armor", armor_value=6, value = 150)
 Dragon_Armor = Armor("Dragon Armor", armor_value=20, value= 3000)
 

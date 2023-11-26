@@ -96,7 +96,4 @@ class Inventory_GUI:
             character.armor = item
             self.label_armor.config(text=f"Armor: {item.name}")
             CreateToolTip(self.label_armor, text=f"{item.examine()}")
-            character.weakness = []
-            for armor_weakness in item.weakness:
-                character.weakness.append(armor_weakness)
 

@@ -47,7 +47,7 @@ node_2_1_2.audio_file_text = "As you are about to leave to get the money, you se
 tree_2_1_2 = tree_1_1_1.add_child(node_2_1_2)
 
 #Height 3
-node_3_1_1 = Node("You grab your sword, wand, and armour", iteam = [Wood_Sword, Starter_Wand, Leather_Armor])
+node_3_1_1 = Node("You grab your sword, wand, and armor", iteam = [Wood_Sword, Starter_Wand, Leather_Armor])
 node_3_1_1.audio_file_text = "You run to the left side entrance to where you keep all of your equipment. All you are have is the clothes on your back and your fists. You grab and put into your inventory a wooden sword, a basic wand, and your leather armor. As you are putting your leather armor on, you mother bursts into the door with your siblings. You see fear, confusion, worriness in everyones eyes. She explains how one of the gaurds just started spaz, dropped to the ground, and then brutally pumbel the other guard to death. Now your father is fighting and he told us to run and hide. You can tell she is nervious for his saftey."
 tree_3_1_1 = tree_2_1_1.add_child(node_3_1_1)
 
@@ -57,7 +57,7 @@ tree_3_1_2 = tree_2_1_1.add_child(node_3_1_2)
 
 node_3_2_3 = Node("You run to join the fight with your father")
 node_3_2_3.audio_file_text = "You rush out into the heat of the conflict. You understand that your father shouldn't have to do it due to his old age. Your father sees you out of the corner of his eye and lets you take the initative."
-node_3_2_3.enemies = [(character(name="Corrupt Guard", inventory=Inventory(100, [Iron_Sword, Wood_Shield]), weakness=["electric", "ice"], health=15, weapon1=claws, weapon2=claws, turned=True, distance=7, armor=Leather_Armor))]
+node_3_2_3.enemies = [(character(name="Corrupt Guard", inventory=Inventory(100, [Iron_Sword, Wood_Shield]), species_weakness=["electric"], health=15, weapon1=claws, weapon2=claws, turned=True, distance=7, armor=Leather_Armor, movement_distance=5))]
 tree_3_2_3 = tree_2_1_2.add_child(node_3_2_3)
 
 node_3_2_4 = Node("You think your father has it under control and don't want to get in his way")

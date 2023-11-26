@@ -71,7 +71,6 @@ def next_node(node, character):
             return node.children[next_action_index]
         else:
             print(Fore.BLUE + node.audio_file_text + Fore.RESET)
-            temp_health = character.health
             sleep(3)
 
             combat(character, node.enemies)
@@ -82,8 +81,8 @@ def next_node(node, character):
             if character.health == 0:
                 next_action_index = 1
                 character.turned += 1
-                character.health = temp_health + (5 * character.turned)
-            elif  total_enemy_health == 0:
+                character.health = 30 + (5 * character.turned)
+            elif total_enemy_health == 0:
                 next_action_index = 0
             else:
                 next_action_index = 2
