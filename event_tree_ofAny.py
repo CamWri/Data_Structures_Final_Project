@@ -57,7 +57,7 @@ tree_3_1_2 = tree_2_1_1.add_child(node_3_1_2)
 
 node_3_2_3 = Node("You run to join the fight with your father")
 node_3_2_3.audio_file_text = "You rush out into the heat of the conflict. You understand that your father shouldn't have to do it due to his old age. Your father sees you out of the corner of his eye and lets you take the initative."
-node_3_2_3.enemies = [(character(name="Corrupt Guard", inventory=Inventory(100, [Iron_Sword, Wood_Shield]), species_weakness=["electric"], health=15, weapon1=claws, weapon2=claws, turned=True, distance=7, armor=Leather_Armor, movement_distance=5))]
+node_3_2_3.enemies = [(character(name="Corrupt Guard", inventory=Inventory(100, [Iron_Sword, Wood_Shield]), species_weakness=["electric", "piercing"], health=15, weapon1=claws, weapon2=Starter_Wand, distance=7, armor=Leather_Armor, movement_distance=5))]
 tree_3_2_3 = tree_2_1_2.add_child(node_3_2_3)
 
 node_3_2_4 = Node("You think your father has it under control and don't want to get in his way")

@@ -7,9 +7,9 @@ class Inventory_GUI:
         label_name = Label(inventory_interface, text=f'{character.name}\'s Inventory')
         label_name.pack()
 
-        frame_top = Frame(inventory_interface)
+        self.frame_top = Frame(inventory_interface)
 
-        frame_weapon = Frame(frame_top)
+        frame_weapon = Frame(self.frame_top)
 
         label_gold = Label(frame_weapon, text=f'Gold: {character.inventory.gold}')
         label_gold.pack()
@@ -28,15 +28,15 @@ class Inventory_GUI:
 
         frame_weapon.pack(side=LEFT, anchor="w", padx=30, pady=5)
 
-        if character.weapon2.type != "Hand Attacks":
-            frame_spells = Frame(frame_top)
+        if character.weapon2.type_of_damage == "magical":
+            self.frame_spells = Frame(self.frame_top)
             for spell in character.weapon2.spells:
-                label = Label(frame_spells, text=f'{spell.name}')
+                label = Label(self.frame_spells, text=f'{spell.name}')
                 label.pack()
                 CreateToolTip(label, text=f"{spell.examine()}")
-            frame_spells.pack(side=RIGHT, anchor="e", padx=70, pady=5)
+            self.frame_spells.pack(side=RIGHT, anchor="e", padx=70, pady=5)
 
-        frame_top.pack(side=TOP, anchor="n")
+        self.frame_top.pack(side=TOP, anchor="n")
 
         frame_inventory = Frame(inventory_interface)
 
@@ -75,6 +75,15 @@ class Inventory_GUI:
             else:
                 self.radio_button_list[item_to_equip_index].config(text = f"{character.weapon2.name}", width = len(character.weapon2.name))
                 CreateToolTip(self.radio_button_list[item_to_equip_index], text=f"{character.weapon2.examine()}")
+            if character.weapon2.type_of_damage == "magical":
+                self.frame_spells.destroy()
+            if item.type_of_damage == "magical":
+                self.frame_spells = Frame(self.frame_top)
+                for spell in item.spells:
+                    label = Label(self.frame_spells, text=f'{spell.name}')
+                    label.pack()
+                    CreateToolTip(label, text=f"{spell.examine()}")
+                self.frame_spells.pack(side=RIGHT, anchor="e", padx=70, pady=5)
             character.inventory.items[item_to_equip_index] = character.weapon2
             character.weapon2 = item
             self.label_weapon2.config(text=f"Weapon 2: {item.name}")

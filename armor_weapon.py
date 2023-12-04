@@ -8,9 +8,10 @@ class Sword:
         self.element = elemental
         self.elemental_damage = elemental_damage
         self.type = "weapon1"
+        self.type_of_damage = "slashing"
 
     def examine(self):
-        return f'Weapon 1: {self.name}\nValue: {self.value}\nDamage: {self.damage}\nRange: {self.range}\nElement: {self.element}\nElement Damage: {self.elemental_damage}'
+        return f'Weapon 1: {self.name}\nValue: {self.value}\nDamage: {self.damage}\nType of Damage: {self.type_of_damage}\nRange: {self.range}\nElement: {self.element}\nElement Damage: {self.elemental_damage}'
 
 
 
@@ -20,6 +21,35 @@ Iron_Sword = Sword("Iron Sword", 15,30)
 Light_Bringer_Sword = Sword("Light Bringer Sword", 10, 100, elemental = "light", elemental_damage = 10)
 Dark_Creators_Sword = Sword("Dark Creator's Sword", 10, 175, elemental = "darkness", elemental_damage = 10)
 Celestial_Sword = Sword("Celestial Sword", 15, 2500, elemental = "celestial", elemental_damage = 15)
+
+class Spear:
+    def __init__(self, name, damage, value, elemental = None, elemental_damage = 0):
+        self.damage = damage
+        self.value = value
+        self.name = name
+        self.range = 3
+        self.element = elemental
+        self.elemental_damage = elemental_damage
+        self.type = "weapon1"
+        self.type_of_damage = "piercing"
+
+    def examine(self):
+        return f'Weapon 1: {self.name}\nValue: {self.value}\nDamage: {self.damage}\nType of Damage: {self.type_of_damage}\nRange: {self.range}\nElement: {self.element}\nElement Damage: {self.elemental_damage}'
+
+
+class Club:
+    def __init__(self, name, damage, value, elemental = None, elemental_damage = 0):
+        self.damage = damage
+        self.value = value
+        self.name = name
+        self.range = 3
+        self.element = elemental
+        self.elemental_damage = elemental_damage
+        self.type = "weapon1"
+        self.type_of_damage = "bludgeoning"
+
+    def examine(self):
+        return f'Weapon 1: {self.name}\nValue: {self.value}\nDamage: {self.damage}\nType of Damage: {self.type_of_damage}\nRange: {self.range}\nElement: {self.element}\nElement Damage: {self.elemental_damage}'
 
 
 class Wand:
@@ -47,9 +77,7 @@ class Spell:
         self.elemental = elemental
         self.elemental_damage = elemental_damage
         self.radius = radius
-
-    def cast_spell(self):
-        pass
+        self.range = -100
 
     def examine(self):
         return f'{self.name}\nDamage: {self.damage}\nElement: {self.elemental}\nElemental Damage: {self.elemental_damage}\nDamage Radius: {self.radius}'
@@ -77,7 +105,7 @@ Water_Bubble = Spell("Water Bubble", damage = 2, elemental="water", elemental_da
 Water_Gun = Spell("Water Gun", damage = 4, elemental="Water", elemental_damage=4)
 Tsunami = Spell("Tsunami", damage = 8, elemental="Water", elemental_damage=12, radius = 20) #From your position, deal 20 damage to all enemies in a radius of 20
 
-Frost = Spell("Ray of Frost", elemental="ice", elemental_damage= 1, radius=10)
+Frost = Spell("Frost", elemental="ice", elemental_damage= 1, radius=10)
 Ice_Blast = Spell("Ice Blast", damage = 3, elemental = "ice", elemental_damage =3, radius = 2)
 Blizzard = Spell("Blizzard", damage = 10, elemental= "ice", elemental_damage= 10, radius = 4)
 
@@ -90,13 +118,13 @@ Bulk = Spell("Bulk")
 
 
 Star_Crash = Spell("Star Crash", damage = 20, elemental= "space", elemental_damage=10, radius=20)
-Astral_Force = Spell("Astral Force", damage = 50, elemental= "space", elemental_damage= 10 )
+Astral_Force = Spell("Astral Force", damage = 50, elemental= "space", elemental_damage= 10)
 
 
 Starter_Wand = Wand("Starter Wand", 10, [Flame_Orb, Vine_Grip])
-Intermediate_Wand = Wand("Intermediate Wand", 50, [])
-Fire_Oracle = Wand("Fire Oracle", 1000, [Incinerate, Dragons_Breath, Divine_Blessing])
-Astral_Master_Wand = Wand("Astral_Master_Wand", 10000, [Star_Crash, Astral_Force])
+Intermediate_Wand = Wand("Intermediate Wand", 50, [Tornado, Ice_Blast, Water_Gun, Electrical_Surge])
+Fire_Oracle_Wand = Wand("Fire Oracle", 1000, [Incinerate, Dragons_Breath, Divine_Blessing])
+Astral_Master_Wand = Wand("Astral Master Wand", 10000, [Star_Crash, Astral_Force])
 
 class Armor:
     def __init__(self, name, armor_value = 0, value = 0, weakness = []):

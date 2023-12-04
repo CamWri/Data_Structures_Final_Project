@@ -3,6 +3,7 @@ from species import *
 from combat_gui import *
 from inventory_gui import *
 from time import *
+from tkinter import*
 
 def play_intro():
     print(Fore.BLUE + "There has and will always be good and evil. During prosperity, evil lingers in the shadows of the good. Over time though, this evil unleashes on the world. Today is one of those times with a curse spreading all across the lands corrupting the soul itself. Depending on your actions, you can be the savior of the lands or lead the curse for domination. So with the fate of the lands in your hands, who will you be?" + Fore.RESET)
@@ -80,8 +81,7 @@ def next_node(node, character):
 
             if character.health == 0:
                 next_action_index = 1
-                character.turned += 1
-                character.health = 30 + (5 * character.turned)
+                character.health = 30 + 5
             elif total_enemy_health == 0:
                 next_action_index = 0
             else:
@@ -98,7 +98,6 @@ def combat(character, enemy_list):
 
     combat_interface.resizable(False, False)
 
-    combat_interface.overrideredirect(True)
     Combat_GUI(combat_interface, character, enemy_list)
 
     combat_interface.mainloop()

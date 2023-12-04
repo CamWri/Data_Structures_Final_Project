@@ -17,7 +17,7 @@ class Combat_GUI:
 
         self.frame_button = Frame(self.combat_interface)
 
-        self.attack_commit_button = Button(self.frame_button, text="Attack", command=lambda: self.attack(character, enemy_list))
+        self.attack_commit_button = Button(self.frame_button, text="Do Actions", command=lambda: self.attack(character, enemy_list))
         self.attack_commit_button.pack(side=LEFT, anchor="e", padx = 10)
 
         self.exit_commit_button = Button(self.frame_button, text="Exit", command=lambda:  self.combat_interface.destroy())
@@ -120,7 +120,7 @@ class Combat_GUI:
         self.movement_label = Label(self.combat_interface, text = "Movement")
         self.movement_label.pack(side = BOTTOM)
 
-        self.label_final_text = Label(self.combat_interface, text=f"")
+        self.label_final_text = Label(self.combat_interface, text=f"You move first and then attack")
         self.label_final_text.pack(side=BOTTOM)
 
         self.enemy_attack_frame.pack(side = TOP, pady = 15)
@@ -132,6 +132,15 @@ class Combat_GUI:
 
         self.label_final_text.config(text = "")
 
+        self.move_forward = True
+
+        for enemy in enemy_list:
+            if enemy.distance_from_player > self.movement_number.get():
+                enemy.distance_from_player -= self.movement_number.get()
+            else:
+                enemy.distance_from_player = 1
+                self.move_forward = False
+
         if character_attack_index == 1:
             if character.weapon1.range >= enemy_list[enemy_attacked_index].distance_from_player:
                 self.attack_enemy(enemy_attacked_index, enemy_list, character, character.weapon1)
@@ -139,17 +148,17 @@ class Combat_GUI:
             else:
                 self.label_final_text.config(text= f"The enemy is out of range to attack with {character.weapon1.name}")
         elif character_attack_index == 2:
-            if character.weapon1.range >= enemy_list[enemy_attacked_index].distance_from_player:
+            if character.weapon2.range >= enemy_list[enemy_attacked_index].distance_from_player:
                 self.attack_enemy(enemy_attacked_index, enemy_list, character, character.weapon2)
                 self.combat_interface.after(2000, lambda: self.enemy_attack(enemy_list, character))
             self.label_final_text.config(text=f"The enemy is out of range to attack with {character.weapon2.name}")
         elif character_attack_index == 0:
-            for enemy in enemy_list:
-                enemy.distance_from_player -= self.movement_number.get()
-                CreateToolTip(self.enemy_label_list[enemy_list.index(enemy)],text=f"{enemy.examine()}")
-                CreateToolTip(self.radio_enemy_label_list[enemy_list.index(enemy)],text=f"{enemy.examine()}")
+            if self.move_forward:
+                self.character_attack_label.config(text=f"You do not attack with any weapon but moved {self.movement_number.get()}")
+            else:
+                self.character_attack_label.config(text=f"You attempt to move forward but an enemy is in your way")
+
             self.combat_interface.after(2000, lambda: self.enemy_attack(enemy_list, character))
-            self.character_attack_label.config(text = f"You moved {self.movement_number.get()}")
         else:
             self.attack_enemy(enemy_attacked_index, enemy_list, character, character.weapon2.spells[character_attack_index-3])
             self.combat_interface.after(2000, lambda: self.enemy_attack(enemy_list, character))
@@ -177,7 +186,6 @@ class Combat_GUI:
         elif character.health == 0:
             self.label_final_text.config(text="You Have Lost the Fight")
             self.label_final_text.pack(side=BOTTOM, pady=20)
-            self.combat_interface.overrideredirect(False)
             self.combat_interface.after(3000, lambda: self.combat_interface.destroy())
 
         self.radio_attack_set.set(0)
@@ -200,12 +208,18 @@ class Combat_GUI:
         return self.character_label
 
     def attack_enemy(self, enemy_attacked_index, enemy_list, character, weapon):
-        damage = weapon.damage + (character.turned * 3) - (enemy_list[enemy_attacked_index].armor.armor_value * 0.5)
+        damage = weapon.damage - (enemy_list[enemy_attacked_index].armor.armor_value * 0.5)
 
         if weapon.elemental in enemy_list[enemy_attacked_index].weakness:
-            damage += (weapon.elemental_damage * 2)
+            damage += (weapon.elemental_damage * 0.5)
         else:
             damage += weapon.elemental_damage
+
+        if weapon.elemental in enemy_list[enemy_attacked_index].weakness:
+            damage += (weapon.elemental_damage * 0.5)
+        else:
+            damage += weapon.elemental_damage
+
 
         if enemy_list[enemy_attacked_index].weapon2.type_of_damage is None:
             damage -= (enemy_list[enemy_attacked_index].weapon2.damage_mitigation * 0.5)
@@ -223,7 +237,12 @@ class Combat_GUI:
         CreateToolTip(self.enemy_label_list[enemy_attacked_index], text=f"{enemy_list[enemy_attacked_index].examine()}")
         CreateToolTip(self.radio_enemy_label_list[enemy_attacked_index],text=f"{enemy_list[enemy_attacked_index].examine()}")
 
-        self.enemy_attack_list[0].config(text = f"{character.name} did {damage} damage to {enemy_list[enemy_attacked_index].name}. {enemy_list[enemy_attacked_index].name} has {enemy_list[enemy_attacked_index].health} health left.")
+        if self.move_forward:
+            self.enemy_attack_list[0].config(text = f"{character.name} did {damage} damage to {enemy_list[enemy_attacked_index].name}. {enemy_list[enemy_attacked_index].name} has {enemy_list[enemy_attacked_index].health} health left.\nYou moved {self.movement_number.get()}")
+        else:
+            self.enemy_attack_list[0].config(text = f"{character.name} did {damage} damage to {enemy_list[enemy_attacked_index].name}. {enemy_list[enemy_attacked_index].name} has {enemy_list[enemy_attacked_index].health} health left.\nYou attempt to move forward but an enemey blocks you")
+
+
 
     def enemy_attack(self, enemy_list, character):
         for enemy in enemy_list:
@@ -241,7 +260,7 @@ class Combat_GUI:
                         enemy_damage = 1
 
                     character.health -= enemy_damage
-                    self.enemy_attack_list[enemy_list.index(enemy) + 1].config(text=f"{enemy.name} did {enemy_damage} damage to {character.name}. {character.name} has {character.health} health left.")
+                    self.enemy_attack_list[enemy_list.index(enemy) + 1].config(text=f"{enemy.name} did {enemy_damage} damage to {character.name} by using {enemy.weapon1.name}. \n{character.name} has {character.health} health left.")
                 elif enemy.weapon2.range >= enemy.distance_from_player:
                     enemy_damage = enemy.weapon2.damage - (character.armor.armor_value * 0.5)
                     if character.weapon2.type_of_damage is None:
@@ -254,18 +273,15 @@ class Combat_GUI:
                         enemy_damage = 1
 
                     character.health -= enemy_damage
-                    self.enemy_attack_list[enemy_list.index(enemy) + 1].config(text=f"{enemy.name} did {enemy_damage} damage to {character.name}. {character.name} has {character.health} health left.")
+                    self.enemy_attack_list[enemy_list.index(enemy) + 1].config(text=f"{enemy.name} did {enemy_damage} damage to {character.name} by using {enemy.weapon2.name}. \n{character.name} has {character.health} health left.")
                 elif enemy.weapon2.type_of_damage == "magical":
-                    most_effective_spell = None
-                    current_damage = 0
+                    most_effective_spell = enemy.weapon2.spells[0]
+                    current_damage = enemy.weapon2.spells[0].damage
                     for spell in enemy.weapon2.spells:
                         if spell.elemental in character.weakness:
                             most_effective_spell = spell
                             current_damage = spell.damage * 1.5
-                        elif spell.damage > current_damage:
-                            current_damage = spell.damage
-                            most_effective_spell = spell
-                    enemy_damage = most_effective_spell.damage - (character.armor.armor_value * 0.5)
+                    enemy_damage = current_damage - (character.armor.armor_value * 0.5)
                     if character.weapon2.type_of_damage is None:
                         enemy_damage -= (character.weapon2.damage_mitigation * 0.5)
                     if enemy_damage < 1:
@@ -275,14 +291,15 @@ class Combat_GUI:
                         enemy_damage *= 1.5
 
                     character.health -= enemy_damage
-                    self.enemy_attack_list[enemy_list.index(enemy) + 1].config(text=f"{enemy.name} did {enemy_damage} damage to {character.name}. {character.name} has {character.health} health left.")
+                    self.enemy_attack_list[enemy_list.index(enemy) + 1].config(text=f"{enemy.name} did {enemy_damage} damage to {character.name} by using {most_effective_spell.name}. \n{character.name} has {character.health} health left.")
                 else:
-                    if enemy.distance_from_player >= enemy.movement_distance + 1:
-                        enemy.distance_from_player -= enemy.movement_distance
-                    else:
-                        enemy.distance_from_player = 1
+                    enemy.distance_from_player -= enemy.movement_distance
                     self.enemy_attack_list[enemy_list.index(enemy) + 1].config(text=f"{enemy.name} moved closer to {character.name} by {enemy.movement_distance}")
                 CreateToolTip(self.player_label, text=f"Health: {character.health}")
+
+                CreateToolTip(self.enemy_label_list[enemy_list.index(enemy)],text=f"{enemy_list[enemy_list.index(enemy)].examine()}")
+                CreateToolTip(self.radio_enemy_label_list[enemy_list.index(enemy)],text=f"{enemy_list[enemy_list.index(enemy)].examine()}")
+
                 if character.health <= 0:
                     character.health = 0
                     break
